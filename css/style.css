@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+#grid {
+    grid-gap: .4rem;
+    padding: .4rem;
+    height: 100vh;
+}
+
+.card {
+    position: relative;
+    height: 100%;
+    padding: 0;
+    border: 2px solid #ccc;
+    border-radius: .4rem;
+}
+
+.blue {
+    background-color: #2584d2;
+}
+.green {
+    background-color: #25d241;
+}
+.red {
+    background-color: #d24925;
+}
+
+.dragbtn {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+    background-color: #ccc;
+    cursor: move;
+}
+.resizebtn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 50% 0 .2rem 0;
+    height: 1rem;
+    width: 1rem;
+    background-color: #ccc;
+    cursor: nw-resize;
+}
+
+.dropzone {
+    border: 2px dashed #ccc;
+    border-radius: .4rem;
+}
