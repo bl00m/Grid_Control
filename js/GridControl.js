@@ -164,7 +164,7 @@ class CardControl {
     switchWith(otherCard) {
         for (var i=this.position.row; i < this.position.row + this.position.height; i++) {
             for (var j=this.position.col; j < this.position.col + this.position.width; j++) {
-                this.grid.template[i][j] = otherCard.templateArea;
+                this.grid.template[i][j] = otherCard.area;
             }
         }
 
