@@ -20,6 +20,7 @@ class GridControl {
         for (var i=0; i<this.template.length; i++) {
             for (var j=0; j<this.template[0].length; j++) {
                 if (this.template[i][j] != '_' && !(this.template[i][j] in this.cards)) {
+                    console.log(this.template[i][j]);
                     this.cards[this.template[i][j]] = new CardControl(this.element.children[childIndex++], this, this.template[i][j]);
                 }
             }
@@ -91,15 +92,15 @@ class GridControl {
 }
 
 class CardControl {
-    constructor(element, grid, gridArea) {
+    constructor(element, grid, area) {
         this.element = element;
         this.grid = grid;
-        this.templateArea = gridArea;
-        this.position = this.grid.getAreaPosition(this.templateArea);
+        this.element.style.gridArea = area;
+        this.position = this.grid.getAreaPosition(this.area);
+    }
 
-        this.element.setAttribute('data-grid-area', this.templateArea);
-        this.element.style.gridArea = this.templateArea;
-        this.grid.cards[this.templateArea] = this;
+    get area() {
+        return this.element.style.gridArea.split(' / ')[0];
     }
 
     spanRight() {
@@ -112,7 +113,7 @@ class CardControl {
         }
 
         for (var i = this.position.row; i < this.position.row + this.position.height; i++) {
-            this.grid.template[i][this.position.col+this.position.width] = this.templateArea;
+            this.grid.template[i][this.position.col+this.position.width] = this.area;
         }
 
         this.position.width++;
@@ -128,7 +129,7 @@ class CardControl {
         }
 
         for (var i = this.position.col; i < this.position.col + this.position.width; i++) {
-            this.grid.template[this.position.row + this.position.height][i] = this.templateArea;
+            this.grid.template[this.position.row + this.position.height][i] = this.area;
         }
 
         this.position.height++;
@@ -169,7 +170,7 @@ class CardControl {
 
         for (var i=otherCard.position.row; i < otherCard.position.row + otherCard.position.height; i++) {
             for (var j=otherCard.position.col; j < otherCard.position.col + otherCard.position.width; j++) {
-                this.grid.template[i][j] = this.templateArea;
+                this.grid.template[i][j] = this.area;
             }
         }
 
@@ -181,7 +182,7 @@ class CardControl {
     }
 
     moveToEmptyCell(row, col) {
-        this.grid.template[row][col] = this.templateArea;
+        this.grid.template[row][col] = this.area;
 
         for (var i=this.position.row; i < this.position.row + this.position.height; i++) {
             for (var j=this.position.col; j < this.position.col + this.position.width; j++) {

@@ -30,6 +30,9 @@ html, body {
 .red {
     background-color: #d24925;
 }
+.violet {
+    background-color: #b31d9b;
+}
 
 .dragbtn {
     position: absolute;
