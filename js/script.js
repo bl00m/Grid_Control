@@ -1,4 +1,14 @@
-var grid = new GridControl(document.getElementById('grid'), '_ a c _ _|b _ c _ _|b _ c _ _|e e _ _ _');
+var rules = {
+    'areas': ['a', 'b', 'c', 'd'],
+    'templateArea': '_ a c _ _ _ _ _ _|_ a c _ _ _ _ _ _|b _ c _ _ _ _ _ _|b _ c _ _ d _ _ _',
+    'templateRows': 'repeat(4, 1fr)',
+    'templateColumns': 'repeat(9, 1fr)'
+}
+
+var grid = new GridControl(
+    document.getElementById('grid'),
+    rules
+);
 
 for (var key in grid.cards) {
     grid.cards[key].element.addEventListener('dragover', function (event) {

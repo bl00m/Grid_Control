@@ -1,9 +1,10 @@
 class GridControl {
-    constructor(element, templateStr) {
+    constructor(element, rules) {
         this.element = element;
+        this.initialRules = rules;
 
         this.template = [];
-        var templateStrLines = templateStr.split('|');
+        var templateStrLines = rules.templateArea.split('|');
         for (var i=0; i<templateStrLines.length; i++) {
             var templateLines = [];
 
@@ -16,21 +17,31 @@ class GridControl {
         }
 
         this.cards = {};
-        var childIndex = 0;
-        for (var i=0; i<this.template.length; i++) {
-            for (var j=0; j<this.template[0].length; j++) {
-                if (this.template[i][j] != '_' && !(this.template[i][j] in this.cards)) {
-                    console.log(this.template[i][j]);
-                    this.cards[this.template[i][j]] = new CardControl(this.element.children[childIndex++], this, this.template[i][j]);
-                }
-            }
+        for (var i=0; i<this.element.children.length; i++) {
+            this.cards[rules.areas[i]] = new CardControl(this.element.children[i], this, rules.areas[i]);
         }
 
         this.element.style.display = 'grid';
-        this.element.style.gridTemplateRows = 'repeat(' + this.template.length + ', 1fr)';
-        this.element.style.gridTemplateColumns = 'repeat(' + this.template[0].length + ', 1fr)';
+        this.element.style.gridTemplateRows = rules.templateRows;
+        this.element.style.gridTemplateColumns = rules.templateColumns;
 
         this.applyTemplate();
+    }
+
+    get rules() {
+        var rules = this.initialRules;
+
+        var templateArea = '';
+        for (var i=0; i<this.template.length; i++) {
+            for(var j=0; j<this.template[0].length; j++) {
+                templateArea += this.template[i][j];
+                if (j < this.template[0].length-1) templateArea += ' ';
+            }
+            if (i < this.template.length-1) templateArea += '|';
+        }
+
+        rules.templateArea = templateArea;
+        return rules;
     }
 
     applyTemplate() {
@@ -40,7 +51,7 @@ class GridControl {
             var line = '';
 
             for (var j=0; j<this.template[i].length; j++) {
-                line += this.template[i][j]
+                line += this.template[i][j];
 
                 if (this.template[i][j] == '_') line += i + '_' + j;
 
