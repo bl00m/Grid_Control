@@ -17,7 +17,7 @@ for (var key in grid.cards) {
 
     grid.cards[key].element.addEventListener('drop', function (event) {
          event.preventDefault();
-         var thisCard = grid.cards[this.style.gridArea.split(' / ')[0]]
+         var thisCard = grid.cards[this.style.gridArea[this.style.gridArea.length-1]]
          var otherCard = grid.cards[event.dataTransfer.getData('text')]
          thisCard.switchWith(otherCard);
     });
@@ -26,7 +26,8 @@ for (var key in grid.cards) {
 var dragBtns = document.getElementsByClassName('dragbtn');
 for (var i=0; i<dragBtns.length; i++) {
     dragBtns[i].addEventListener('dragstart', function (event) {
-        event.dataTransfer.setData("Text", event.target.parentElement.style.gridArea.split(' / ')[0]);
+        let gridArea = event.target.parentElement.style.gridArea;
+        event.dataTransfer.setData("text", gridArea[gridArea.length-1]);
         setupDropZones();
     });
     dragBtns[i].addEventListener('dragend', function () {
@@ -38,7 +39,8 @@ var resizeBtns = document.getElementsByClassName('resizebtn');
 for (var i=0; i<resizeBtns.length; i++) {
     resizeBtns[i].addEventListener('mousedown', function (event) {
         event.preventDefault();
-        var card = grid.cards[this.parentNode.style.gridArea.split(' / ')[0]]
+        let gridArea = this.parentNode.style.gridArea;
+        var card = grid.cards[gridArea[gridArea.length-1]]
         var cellWidth = card.element.offsetWidth/card.position.width;
         var cellHeight = card.element.offsetHeight/card.position.height;
         var initialX = event.pageX;
@@ -81,14 +83,14 @@ function setupDropZones() {
                 dropzone.id = i + '-' + j;
 
                 dropzone.addEventListener('dragover', function (event) {
-                     event.preventDefault();
+                    event.preventDefault();
                 });
 
                 dropzone.addEventListener('drop', function (event) {
-                     event.preventDefault();
-                     var pos = this.id.split('-');
-                     var card = grid.cards[event.dataTransfer.getData('text')];
-                     card.moveToEmptyCell(parseInt(pos[0]), parseInt(pos[1]));
+                    event.preventDefault();
+                    var pos = this.id.split('-');
+                    var card = grid.cards[event.dataTransfer.getData('text')];
+                    card.moveToEmptyCell(parseInt(pos[0]), parseInt(pos[1]));
                 });
 
                 grid.element.appendChild(dropzone);

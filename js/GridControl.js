@@ -107,11 +107,11 @@ class CardControl {
         this.element = element;
         this.grid = grid;
         this.element.style.gridArea = area;
-        this.position = this.grid.getAreaPosition(this.area);
+        this.position = this.grid.getAreaPosition(area);
     }
 
     get area() {
-        return this.element.style.gridArea.split(' / ')[0];
+        return this.element.style.gridArea[this.element.style.gridArea.length-1];
     }
 
     spanRight() {
